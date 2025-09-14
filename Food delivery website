@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreshBite - Food Delivery</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #ff6b35;
+            --secondary: #f7c59f;
+            --accent: #2a9d8f;
+            --dark: #264653;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+        }
+
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo h1 {
+            color: var(--primary);
+            font-size: 28px;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 25px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+
+        .cart-icon {
+            position: relative;
+            font-size: 22px;
+            color: var(--dark);
+            cursor: pointer;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--primary);
+            color: white;
+            font-size: 12px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://placehold.co/1200x600') no-repeat center center/cover;
+            height: 450px;
+            display: flex;
+            align-items: center;
+            color: white;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .hero h2 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #e55a2a;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Menu Section */
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-title h2 {
+            font-size: 36px;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+
+        .section-title p {
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .menu-filters {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            margin: 0 5px 10px;
+            cursor: pointer;
+            font-weight: 500;
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 60px;
+        }
+
+        .menu-item {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .menu-item-img {
+            height: 180px;
+            overflow: hidden;
+        }
+
+        .menu-item-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .menu-item:hover .menu-item-img img {
+            transform: scale(1.05);
+        }
+
+        .menu-item-content {
+            padding: 20px;
+        }
+
+        .menu-item-title {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .menu-item-title h3 {
+            font-size: 18px;
+            color: var(--dark);
+        }
+
+        .menu-item-price {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .menu-item-desc {
+            color: var(--gray);
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .add-to-cart {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .add-to-cart i {
+            margin-right: 5px;
+        }
+
+        .add-to-cart:hover {
+            background-color: #23857a;
+        }
+
+        /* Gallery Section */
+        .gallery {
+            margin-bottom: 60px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .gallery-item {
+            height: 200px;
+            overflow: hidden;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .gallery-item:hover::after {
+            opacity: 1;
+        }
+
+        /* Cart Sidebar */
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 350px;
+            height: 100vh;
+            background-color: white;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: right 0.4s ease;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .cart-sidebar.open {
+            right: 0;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-header h2 {
+            color: var(--dark);
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--gray);
+        }
+
+        .cart-items {
+            margin-bottom: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-right: 15px;
+        }
+
+        .cart-item-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .cart-item-content {
+            flex: 1;
+        }
+
+        .cart-item-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .cart-item-price {
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .cart-item-quantity {
+            display: flex;
+            align-items: center;
+        }
+
+        .quantity-btn {
+            width: 25px;
+            height: 25px;
+            background-color: #f1f1f1;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .quantity-input {
+            width: 35px;
+            text-align: center;
+            border: none;
+            margin: 0 5px;
+            font-weight: 600;
+        }
+
+        .remove-item {
+            color: #dc3545;
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .cart-summary {
+            padding-top: 15px;
+            border-top: 2px solid #eee;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .summary-row.total {
+            font-weight: 700;
+            font-size: 18px;
+            margin-top: 10px;
+            color: var(--dark);
+        }
+
+        .checkout-btn {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            width: 100%;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .checkout-btn:hover {
+            background-color: #23857a;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 30px 0;
+            color: var(--gray);
+        }
+
+        .empty-cart i {
+            font-size: 50px;
+            margin-bottom: 15px;
+            color: #ddd;
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 50px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-column h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 3px;
+            background-color: var(--primary);
+        }
+
+        .footer-column p {
+            margin-bottom: 15px;
+            opacity: 0.8;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+            color: var(--secondary);
+        }
+
+        .social-icons {
+            display: flex;
+            margin-top: 15px;
+        }
+
+        .social-icons a {
+            width: 35px;
+            height: 35px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .social-icons a:hover {
+            background-color: var(--primary);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.8;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 5px 10px;
+            }
+            
+            .hero h2 {
+                font-size: 36px;
+            }
+            
+            .hero p {
+                font-size: 18px;
+            }
+            
+            .cart-sidebar {
+                width: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero h2 {
+                font-size: 28px;
+            }
+            
+            .hero p {
+                font-size: 16px;
+            }
+            
+            .cart-sidebar {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>Fresh<span>Bite</span></h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Menu</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </nav>
+                <div class="cart-icon" id="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">3</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h2>Delicious Food Delivered To Your Door</h2>
+            <p>Experience the best flavors in town with our quick delivery service</p>
+            <a href="#menu" class="btn">Order Now</a>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section class="menu" id="menu">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Menu</h2>
+                <p>Discover our delicious selection of meals prepared with fresh ingredients</p>
+            </div>
+            
+            <div class="menu-filters">
+                <button class="filter-btn active">All</button>
+                <button class="filter-btn">Starters</button>
+                <button class="filter-btn">Main Course</button>
+                <button class="filter-btn">Desserts</button>
+                <button class="filter-btn">Drinks</button>
+            </div>
+            
+            <div class="menu-grid">
+                <!-- Menu Item 1 -->
+                <div class="menu-item">
+                    <div class="menu-item-img">
+                        <img src="https://placehold.co/300x180?text=Margherita+Pizza" alt="Traditional Margherita Pizza with fresh basil and mozzarella">
+                    </div>
+                    <div class="menu-item-content">
+                        <div class="menu-item-title">
+                            <h3>Margherita Pizza</h3>
+                            <div class="menu-item-price">$12.99</div>
+                        </div>
+                        <p class="menu-item-desc">Classic pizza with tomato sauce, mozzarella, and fresh basil</p>
+                        <button class="add-to-cart"><i class="fas fa-plus"></i> Add to Cart</button>
+                    </div>
+                </div>
+                
+                <!-- Menu Item 2 -->
+                <div class="menu-item">
+                    <div class="menu-item-img">
+                        <img src="https://placehold.co/300x180?text=Burger+Meal" alt="Juicy beef burger with cheese and fresh vegetables">
+                    </div>
+                    <div class="menu-item-content">
+                        <div class="menu-item-title">
+                            <h3>Classic Burger Meal</h3>
+                            <div class="menu-item-price">$15.99</div>
+                        </div>
+                        <p class="menu-item-desc">Beef patty with cheese, lettuce, tomato, and side of fries</p>
+                        <button class="add-to-cart"><i class="fas fa-plus"></i> Add to Cart</button>
+                    </div>
+                </div>
+                
+                <!-- Menu Item 3 -->
+                <div class="menu-item">
+                    <div class="menu-item-img">
+                        <img src="https://placehold.co/300x180?text=Caesar+Salad" alt="Fresh Caesar salad with crispy croutons and parmesan">
+                    </div>
+                    <div class="menu-item-content">
+                        <div class="menu-item-title">
+                            <h3>Caesar Salad</h3>
+                            <div class="menu-item-price">$10.99</div>
+                        </div>
+                        <p class="menu-item-desc">Romaine lettuce with croutons, parmesan cheese, and Caesar dressing</p>
+                        <button class="add-to-cart"><i class="fas fa-plus"></i> Add to Cart</button>
+                    </div>
+                </div>
+                
+                <!-- Menu Item 4 -->
+                <div class="menu-item">
+                    <div class="menu-item-img">
+                        <img src="https://placehold.co/300x180?text=Chicken+Pasta" alt="Creamy chicken pasta with herbs and parmesan">
+                    </div>
+                    <div class="menu-item-content">
+                        <div class="menu-item-title">
+                            <h3>Chicken Alfredo Pasta</h3>
+                            <div class="menu-item-price">$14.99</div>
+                        </div>
+                        <p class="menu-item-desc">Creamy Alfredo sauce with grilled chicken and fettuccine pasta</p>
+                        <button class="add-to-cart"><i class="fas fa-plus"></i> Add to Cart</button>
+                    </div>
+                </div>
+                
+                <!-- Menu Item 5 -->
+                <div class="menu-item">
+                    <div class="menu-item-img">
+                        <img src="https://placehold.co/300x180?text=Sushi+Platter" alt="Assorted sushi platter with fresh fish and rice">
+                    </div>
+                    <div class="menu-item-content">
+                        <div class="menu-item-title">
+                            <h3>Sushi Platter</h3>
+                            <div class="menu-item-price">$18.99</div>
+                        </div>
+                        <p class="menu-item-desc">Assorted sushi rolls with fresh fish, avocado, and cucumber</p>
+                        <button class="add-to-cart"><i class="fas fa-plus"></i> Add to Cart</button>
+                    </div>
+                </div>
+                
+                <!-- Menu Item 6 -->
+                <div class="menu-item">
+                    <div class="menu-item-img">
+                        <img src="https://placehold.co/300x180?text=Chocolate+Cake" alt="Rich chocolate cake with frosting and berries">
+                    </div>
+                    <div class="menu-item-content">
+                        <div class="menu-item-title">
+                            <h3>Chocolate Lava Cake</h3>
+                            <div class="menu-item-price">$8.99</div>
+                        </div>
+                        <p class="menu-item-desc">Warm chocolate cake with a molten center, served with ice cream</p>
+                        <button class="add-to-cart"><i class="fas fa-plus"></i> Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery">
+        <div class="container">
+            <div class="section-title">
+                <h2>Food Gallery</h2>
+                <p>A glimpse of our delicious dishes prepared with love</p>
+            </div>
+            
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://placehold.co/400x300?text=Dish+1" alt="Gourmet dish with grilled vegetables and sauce">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://placehold.co/400x300?text=Dish+2" alt="Colorful salad bowl with fresh ingredients">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://placehold.co/400x300?text=Dish+3" alt="Delicious pasta with creamy sauce and herbs">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://placehold.co/400x300?text=Dish+4" alt="Freshly baked bread and pastries assortment">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://placehold.co/400x300?text=Dish+5" alt="BBQ platter with meats and grilled vegetables">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://placehold.co/400x300?text=Dish+6" alt="Refreshing fruit smoothie bowl with toppings">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://placehold.co/400x300?text=Dish+7" alt="Gourmet steak with roasted potatoes">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://placehold.co/400x300?text=Dish+8" alt="Decadent dessert platter with chocolate and berries">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h2>Your Cart</h2>
+            <button class="close-cart" id="close-cart">&times;</button>
+        </div>
+        
+        <div class="cart-items">
+            <!-- Cart Item 1 -->
+            <div class="cart-item">
+                <div class="cart-item-img">
+                    <img src="https://placehold.co/100x100?text=Margherita+Pizza" alt="Margherita Pizza thumbnail">
+                </div>
+                <div class="cart-item-content">
+                    <div class="cart-item-title">Margherita Pizza</div>
+                    <div class="cart-item-price">$12.99</div>
+                    <div class="cart-item-quantity">
+                        <button class="quantity-btn">-</button>
+                        <input type="text" class="quantity-input" value="1">
+                        <button class="quantity-btn">+</button>
+                        <button class="remove-item"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Cart Item 2 -->
+            <div class="cart-item">
+                <div class="cart-item-img">
+                    <img src="https://placehold.co/100x100?text=Burger+Meal" alt="Classic Burger Meal thumbnail">
+                </div>
+                <div class="cart-item-content">
+                    <div class="cart-item-title">Classic Burger Meal</div>
+                    <div class="cart-item-price">$15.99</div>
+                    <div class="cart-item-quantity">
+                        <button class="quantity-btn">-</button>
+                        <input type="text" class="quantity-input" value="1">
+                        <button class="quantity-btn">+</button>
+                        <button class="remove-item"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Cart Item 3 -->
+            <div class="cart-item">
+                <div class="cart-item-img">
+                    <img src="https://placehold.co/100x100?text=Chocolate+Cake" alt="Chocolate Lava Cake thumbnail">
+                </div>
+                <div class="cart-item-content">
+                    <div class="cart-item-title">Chocolate Lava Cake</div>
+                    <div class="cart-item-price">$8.99</div>
+                    <div class="cart-item-quantity">
+                        <button class="quantity-btn">-</button>
+                        <input type="text" class="quantity-input" value="1">
+                        <button class="quantity-btn">+</button>
+                        <button class="remove-item"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="cart-summary">
+            <div class="summary-row">
+                <span>Subtotal</span>
+                <span>$37.97</span>
+            </div>
+            <div class="summary-row">
+                <span>Delivery Fee</span>
+                <span>$2.99</span>
+            </div>
+            <div class="summary-row">
+                <span>Tax</span>
+                <span>$3.04</span>
+            </div>
+            <div class="summary-row total">
+                <span>Total</span>
+                <span>$44.00</span>
+            </div>
+            
+            <button class="checkout-btn">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>FreshBite</h3>
+                    <p>We deliver delicious food right to your doorstep. Experience the best flavors in town with our quick and reliable service.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Menu</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Food Street, Taste City</p>
+                    <p><i class="fas fa-phone"></i> (555) 123-4567</p>
+                    <p><i class="fas fa-envelope"></i> info@freshbite.com</p>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Opening Hours</h3>
+                    <p>Monday - Friday: 10:00 AM - 10:00 PM</p>
+                    <p>Saturday: 11:00 AM - 11:00 PM</p>
+                    <p>Sunday: 11:00 AM - 9:00 PM</p>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 FreshBite. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Cart functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const cartIcon = document.getElementById('cart-icon');
+            const cartSidebar = document.getElementById('cart-sidebar');
+            const closeCart = document.getElementById('close-cart');
+            const overlay = document.getElementById('overlay');
+            
+            // Open cart
+            cartIcon.addEventListener('click', function() {
+                cartSidebar.classList.add('open');
+                overlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+            
+            // Close cart
+            closeCart.addEventListener('click', function() {
+                cartSidebar.classList.remove('open');
+                overlay.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+            
+            // Close cart when clicking on overlay
+            overlay.addEventListener('click', function() {
+                cartSidebar.classList.remove('open');
+                overlay.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+            
+            // Add to cart buttons
+            const addToCartButtons = document.querySelectorAll('.add-to-cart');
+            addToCartButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const item = this.closest('.menu-item');
+                    const itemName = item.querySelector('h3').textContent;
+                    const itemPrice = item.querySelector('.menu-item-price').textContent;
+                    
+                    alert(`${itemName} added to cart!`);
+                    
+                    // In a real application, you would update the cart contents here
+                });
+            });
+            
+            // Quantity buttons
+            const quantityBtns = document.querySelectorAll('.quantity-btn');
+            quantityBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const input = this.parentElement.querySelector('.quantity-input');
+                    let value = parseInt(input.value);
+                    
+                    if (this.textContent === '+') {
+                        value++;
+                    } else {
+                        value = value > 1 ? value - 1 : 1;
+                    }
+                    
+                    input.value = value;
+                    
+                    // In a real application, you would update the cart total here
+                });
+            });
+            
+            // Remove item buttons
+            const removeItemBtns = document.querySelectorAll('.remove-item');
+            removeItemBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const item = this.closest('.cart-item');
+                    item.remove();
+                    
+                    // In a real application, you would update the cart total here
+                    
+                    // Check if cart is empty
+                    if (document.querySelectorAll('.cart-item').length === 0) {
+                        const cartItems = document.querySelector('.cart-items');
+                        cartItems.innerHTML = `
+                            <div class="empty-cart">
+                                <i class="fas fa-shopping-cart"></i>
+                                <p>Your cart is empty</p>
+                            </div>
+                        `;
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
